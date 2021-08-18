@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Router } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import Routes from '../shared/routes'
 import { configureStore } from '../shared/redux/store';
@@ -18,4 +18,9 @@ const App = () => {
     </Provider>
   )
 }
-ReactDom.hydrate(<App />, document.getElementById('root'))
+
+if (__BROWSER__) {
+  ReactDom.render(<App />, document.getElementById('root'))
+} else {
+  ReactDom.hydrate(<App />, document.getElementById('root'))
+}

@@ -1,7 +1,11 @@
+const path = require('path');
+const webpack = require('webpack');
 const { merge } = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const config = require('./base');
 const paths = require('../../paths');
+const { clientOnly } = require('../../../script/utils');
 
 const clientConfig = {
   name: 'client',
@@ -13,10 +17,25 @@ const clientConfig = {
     filename: '[name].js',
     path: paths.clientBuild
   },
-  plugins: [
+  plugins: clientOnly() ? [
+    new HtmlWebpackPlugin({
+      filename: path.join(paths.clientBuild, 'index.html'),
+      inject: true,
+      template: paths.appHtml,
+    }),
+    new webpack.DefinePlugin({
+      __BROWSER__: clientOnly(),
+    }),
     new WebpackManifestPlugin({
       fileName: 'manifest.json',
-    })
+    }),
+  ] : [
+    new webpack.DefinePlugin({
+      __BROWSER__: clientOnly(),
+    }),
+    new WebpackManifestPlugin({
+      fileName: 'manifest.json',
+    }),
   ],
   devtool: 'inline-cheap-module-source-map',
   stats: {

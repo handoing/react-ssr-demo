@@ -4,6 +4,7 @@ const appDirectory = process.cwd();
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 const paths = {
+  appHtml: resolveApp('config/webpack/template.html'),
   clientBuild: resolveApp('build/client'),
   serverBuild: resolveApp('build/server'),
   src: resolveApp('src'),

@@ -44,7 +44,7 @@ const serverRenderer = () => async (req, res) => {
     }
   });
 
-  return res.send(`<!doctype html>${renderToString(
+  return res.send(`<!DOCTYPE html>${renderToString(
     <HTML
       state={state}
       css={[
