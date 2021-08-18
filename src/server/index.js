@@ -1,13 +1,29 @@
-import { render } from './utils';
-import express from 'express'
+import express from 'express';
+import chalk from 'chalk';
+import manifestHelpers from 'express-manifest-helpers';
+import serverRenderer from './middleware/serverRenderer';
+import paths from '../../config/paths';
+import { configureStore } from '../shared/redux/store';
 
 const app = express();
-app.use(express.static('build'));
+const port = process.env.PORT || 8080;
 
-app.use('*', function(req, res, next) {
-  res.send(render(req));
-})
+app.use(
+  manifestHelpers({
+    manifestPath: `${paths.clientBuild}/manifest.json`,
+  })
+);
 
-app.listen(3001, () => {
-  console.log('listen on port 3001')
+app.use((req, res, next) => {
+  res.locals.store = configureStore({});
+  next();
+});
+
+app.use(serverRenderer());
+
+app.listen(port, () => {
+  console.log(
+    `[${new Date().toLocaleString()}]`,
+    chalk.blue(`App is running: http://localhost:${port}`)
+  );
 })

@@ -1,17 +1,32 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom'
-import Home from '../components/Home';
-import Login from '../components/Login'
+import { Route, Switch } from 'react-router-dom'
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    Component: Home,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    Component: Login,
+  }
+];
 
 export default (
-  <div>
-    <div>
-      <Link to="/">home</Link>
-    </div>
-    <div>
-      <Link to="/login">login</Link>
-    </div>
-    <Route path='/' exact component={Home}></Route>
-    <Route path='/login' exact component={Login}></Route>
-  </div>
+  <Switch>
+    {routes.map(({ name, path, Component }, key) => {
+      return (
+        <Route
+          exact
+          path={path}
+          key={key}
+          render={props => <Component {...props} />}
+        ></Route>
+      );
+    })}
+  </Switch>
 )
