@@ -9,7 +9,9 @@
     "start:ssr": "cross-env NODE_ENV=development node script/start",
     "build": "npm run build:ssr",
     "build:spa": "cross-env NODE_ENV=production node script/build --client-only",
-    "build:ssr": "cross-env NODE_ENV=production node script/build"
+    "build:ssr": "cross-env NODE_ENV=production node script/build",
+    "server": "node build/server/index.js",
+    "clean": "rm -rf build/ && rm -rf node_modules/"
   },
   "repository": {
     "type": "git",
@@ -23,15 +25,9 @@
   },
   "homepage": "https://github.com/handoing/react-ssr-demo#readme",
   "dependencies": {
-    "D": "^1.0.0",
     "chalk": "^4.1.2",
-    "cross-env": "^7.0.3",
-    "css-loader": "^6.2.0",
     "express": "^4.17.1",
     "express-manifest-helpers": "^0.6.0",
-    "html-webpack-plugin": "^5.3.2",
-    "mini-css-extract-plugin": "^2.2.0",
-    "node-jsx": "^0.13.3",
     "nodemon": "^2.0.12",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -39,23 +35,28 @@
     "react-router-dom": "^5.2.0",
     "react-ssr-prepass": "^1.4.0",
     "redux": "^4.1.1",
-    "redux-thunk": "^2.3.0",
-    "webpack-manifest-plugin": "^4.0.2",
-    "webpack-merge": "^5.8.0",
-    "webpack-node-externals": "^3.0.0",
-    "write-file-webpack-plugin": "^4.5.1"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
-    "@babel/node": "^7.14.9",
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@babel/register": "^7.15.3",
     "babel-loader": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.2.0",
+    "css-minimizer-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.2.0",
+    "open": "^8.2.1",
+    "terser-webpack-plugin": "^5.1.4",
     "webpack": "^5.50.0",
     "webpack-cli": "^4.8.0",
     "webpack-dev-middleware": "^5.0.0",
-    "webpack-hot-middleware": "^2.25.0"
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-manifest-plugin": "^4.0.2",
+    "webpack-merge": "^5.8.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }

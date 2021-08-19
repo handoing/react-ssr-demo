@@ -5,7 +5,10 @@ const { compilerPromise, logMessage } = require('../utils');
 
 const webpackConfig = getConfig(process.env.NODE_ENV || 'development');
 
+const uploadMainFest = async () => {};
+
 const build = async () => {
+
   const [clientConfig, serverConfig] = webpackConfig;
   const [clientCompiler, serverCompiler] = webpack([clientConfig, serverConfig]).compilers;
   const clientPromise = compilerPromise('client', clientCompiler);
@@ -30,12 +33,12 @@ const build = async () => {
   try {
     await serverPromise;
     await clientPromise;
+    await uploadMainFest();
     logMessage('Done!', 'info');
     process.exit(0);
   } catch (error) {
     logMessage(error, 'error');
   }
-
-}
+};
 
 build();

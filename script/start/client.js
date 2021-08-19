@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const nodemon = require('nodemon');
+const open = require('open');
 const express = require('express');
 const chalk = require('chalk');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -36,6 +36,8 @@ const start = async () => {
   } catch (error) {
     logMessage(error, 'error');
   }
+
+  await open(`${DEV_SERVER_HOST}:${PORT}`);
 }
 
 start();
