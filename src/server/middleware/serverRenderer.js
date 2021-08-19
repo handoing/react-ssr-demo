@@ -1,11 +1,18 @@
+import path from 'path'
 import React from 'react'
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import ssrPrepass from 'react-ssr-prepass';
+import { HelmetProvider } from 'react-helmet-async';
+import paths from '../../../config/paths';
 import Routes from '../../shared/routes';
 
-const HTML = ({ children, css = [], scripts = [], state = '{}'}) => (
+const helmetContext = {};
+
+const checkToken = token => Boolean(token);
+
+const HTML = ({ children, css = [], scripts = [], state = '{}', helmetContext: { helmet } }) => (
   <html lang="">
     <head>
       <meta charSet="utf-8" />
@@ -13,7 +20,9 @@ const HTML = ({ children, css = [], scripts = [], state = '{}'}) => (
       <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       <meta name="referrer" content="always" />
       <meta name="renderer" content="webkit" />
-      <title>react-ssr-demo</title>
+      {helmet.base.toComponent()}
+      {helmet.meta.toComponent()}
+      {helmet.title.toComponent()}
       {css.map((href) => (<link key={href} rel="stylesheet" href={href} />))}
       <script
         dangerouslySetInnerHTML={{
@@ -29,11 +38,19 @@ const HTML = ({ children, css = [], scripts = [], state = '{}'}) => (
 );
 
 const serverRenderer = () => async (req, res) => {
+  const token = req.cookies['token'];
+
+  if (checkToken(token)) {
+    return res.sendFile(path.join(paths.clientBuild, 'index.html'));
+  }
+
   const state = JSON.stringify(res.locals.store.getState());
   const AppMain = (
     <Provider store={res.locals.store}>
       <StaticRouter location={req.url} >
-        {Routes}
+        <HelmetProvider context={helmetContext}>
+          {Routes}
+        </HelmetProvider>
       </StaticRouter>
     </Provider>
   );
@@ -53,6 +70,7 @@ const serverRenderer = () => async (req, res) => {
       scripts={[
         res.locals.assetPath('bundle.js'),
       ]}
+      helmetContext={helmetContext}
     >
       {AppMain}
     </HTML>

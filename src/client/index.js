@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
+import { HelmetProvider } from 'react-helmet-async';
 import Routes from '../shared/routes'
 import { configureStore } from '../shared/redux/store';
 
@@ -13,7 +14,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        {Routes}
+        <HelmetProvider>
+          {Routes}
+        </HelmetProvider>
       </BrowserRouter>
     </Provider>
   )

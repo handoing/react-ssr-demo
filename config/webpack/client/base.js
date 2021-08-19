@@ -63,13 +63,11 @@ module.exports = {
     new WebpackManifestPlugin({
       fileName: 'manifest.json',
     }),
-    ...(clientOnly() ? [
-      new HtmlWebpackPlugin({
-        filename: path.join(paths.clientBuild, 'index.html'),
-        inject: true,
-        template: paths.appHtml,
-      }),
-    ] : [])
+    new HtmlWebpackPlugin({
+      filename: path.join(paths.clientBuild, 'index.html'),
+      inject: true,
+      template: paths.appHtml,
+    })
   ],
   resolve: {
     alias: {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 class Login extends React.Component {
   serverFetchData(req, res) {
@@ -8,10 +9,15 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
+        <Helmet>
+          <title>🌚🌚🌚</title>
+          <meta name="keywords" content="🌚🌚🌚" />
+          <meta name="description" content="🌚🌚🌚" />
+        </Helmet>
         <Link to="/">home</Link>
         <div>This is login</div>
-      </div>
+      </>
     );
   }
 }

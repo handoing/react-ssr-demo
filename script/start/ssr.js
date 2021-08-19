@@ -22,8 +22,6 @@ const replaceBundlePath = (clientConfig, serverConfig) => {
     `webpack-hot-middleware/client?path=${DEV_SERVER_HOST}:${WEBPACK_PORT}/__webpack_hmr`,
     ...clientConfig.entry.bundle,
   ];
-  clientConfig.output.hotUpdateMainFilename = 'updates/[hash].hot-update.json';
-  clientConfig.output.hotUpdateChunkFilename = 'updates/[hash].hot-update.js';
   clientConfig.output.publicPath = [`${DEV_SERVER_HOST}:${WEBPACK_PORT}`, publicPath]
     .join('/')
     .replace(/([^:+])\/+/g, '$1/');
