@@ -14,8 +14,11 @@ function resolve(dir) {
 
 module.exports = {
   name: 'client',
+  target: 'web',
   entry: {
-    'bundle': paths.srcClient,
+    'bundle': [
+      paths.srcClient
+    ],
   },
   output: {
     filename: '[name].js',

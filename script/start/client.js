@@ -1,8 +1,8 @@
 const webpack = require('webpack');
-const open = require('open');
 const express = require('express');
 const chalk = require('chalk');
 const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 const getConfig = require('../../config/webpack');
 const paths = require('../../config/paths.js');
 const { compilerPromise, logMessage } = require('../utils');
@@ -20,6 +20,7 @@ const start = async () => {
   const clientPromise = compilerPromise('client', clientCompiler);
 
   app.use(webpackDevMiddleware(clientCompiler, { writeToDisk: true }));
+  app.use(webpackHotMiddleware(clientCompiler));
   app.use('*', express.static(paths.clientBuild));
 
   try {
@@ -37,7 +38,6 @@ const start = async () => {
     logMessage(error, 'error');
   }
 
-  await open(`${DEV_SERVER_HOST}:${PORT}`);
 }
 
 start();

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { increase, decrease } from '../redux/action';
+import Footer from './Footer';
 import * as style from './Home.module.css';
 
 const Home = (props) => {
@@ -12,6 +13,7 @@ const Home = (props) => {
       <button onClick={() => {props.increase()}}>+</button>
       <span className={style.count}>{props.count}</span>
       <button onClick={() => {props.decrease()}}>-</button>
+      <Footer></Footer>
     </div>
   )
 }
